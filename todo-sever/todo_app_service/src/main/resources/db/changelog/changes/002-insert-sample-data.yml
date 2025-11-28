@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-insert-sample-todos
+      author: todo-dev
+      changes:
+        - insert:
+            tableName: todos
+            columns:
+              - column: {name: title, value: "Learn Spring Boot"}
+              - column: {name: description, value: "Study Spring Boot fundamentals"}
+              - column: {name: completed, valueBoolean: true}  # DÙNG valueBoolean
+              - column: {name: priority, value: 2}
+
+        - insert:
+            tableName: todos
+            columns:
+              - column: {name: title, value: "Learn Liquibase"}
+              - column: {name: description, value: "Understand database migrations"}
+              - column: {name: completed, valueBoolean: false}  # DÙNG valueBoolean
+              - column: {name: priority, value: 1}
+

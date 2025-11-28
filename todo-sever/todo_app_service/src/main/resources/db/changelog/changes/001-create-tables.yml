@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-todos-table
+      author: todo-dev
+      changes:
+        - createTable:
+            tableName: todos
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: completed
+                  type: BOOLEAN
+                  defaultValue: false
+              - column:
+                  name: priority
+                  type: INT
+                  defaultValue: 1
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
