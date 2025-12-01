@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-drop-todo-code
+      author: todo-dev
+      changes:
+        - dropColumn:
+            tableName: todos
+            columnName: todo_code
+      rollback:
+        - addColumn:
+            tableName: todos
+            columns:
+              - column:
+                  name: todo_code
+                  type: varchar(50)
+                  remarks: "Unique code for Todo"
+                  constraints:
+                    nullable: true
