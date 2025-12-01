@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.6'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.liquibase.gradle' version '2.2.0'
 }
 
 group = 'com.example'
@@ -18,6 +19,11 @@ repositories {
     mavenCentral()
 }
 
+// THÊM configurations cho Liquibase
+configurations {
+    liquibaseRuntime.extendsFrom runtimeClasspath
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -30,6 +36,27 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Liquibase runtime dependencies - QUAN TRỌNG!
+    liquibaseRuntime 'org.liquibase:liquibase-core:4.27.0'
+    liquibaseRuntime 'info.picocli:picocli:4.7.5'
+    liquibaseRuntime 'mysql:mysql-connector-java:8.0.33'
+    liquibaseRuntime 'ch.qos.logback:logback-classic:1.4.14'
+}
+
+// CẤU HÌNH LIQUIBASE - ĐẶT ĐÚNG VỊ TRÍ
+liquibase {
+    activities {
+        main {
+            changelogFile 'src/main/resources/db/changelog/db.changelog-master.yml'
+            url 'jdbc:mysql://localhost:3306/todo_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true'
+            username 'root'
+            password 'codegym'
+            driver 'com.mysql.cj.jdbc.Driver'
+            classpath "$projectDir/src/main/resources"
+        }
+    }
+    runList = 'main'
 }
 
 tasks.named('test') {
